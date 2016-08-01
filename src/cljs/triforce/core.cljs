@@ -5,6 +5,7 @@
             [devtools.core :as devtools]
             [triforce.handlers]
             [triforce.store]
+            [triforce.subs]
             [triforce.config :as config]))
 
 (defn dev-setup []

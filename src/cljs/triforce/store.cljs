@@ -4,8 +4,7 @@
             [re-frame.core :as re-frame]
             [re-frame.db :refer [app-db]]))
 
-(defn action-string->kw
-  [action-string]
+(defn action-string->kw [action-string]
   (keyword (lower-case action-string)))
 
 (defn ^:export dispatch [action-string & args]
@@ -34,7 +33,8 @@
        #(remove-watch app-db :store-update)
 
        :render
-       #(->> @app-db
+       #(->> (re-frame/subscribe [:app-state])
+             deref
              ;; Might be expensive to do clj->js on each app-change
              ;; What about Mori/Immutable?
              ;; What about a function clj->immutablejs

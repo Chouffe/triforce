@@ -65,7 +65,7 @@ const CounterList = React.createClass({
           <CounterAdd />
           {this.props.counters.map( function(counter) {
               return (
-                <div>
+                <div key={counter.id}>
                   <Counter counter={counter.value} id={counter.id} />
                   <CounterController id={counter.id} />
                 </div>);
