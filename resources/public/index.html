@@ -12,70 +12,12 @@
   </head>
   <body>
     <div id="app"></div>
+
+    <!-- Loading the cljs store -->
     <script src="js/compiled/app.js"></script>
     <script>triforce.core.init();</script>
 
-
-    <script type="text/babel">
-      $(document).ready(function() {
-
-        var Counter = React.createClass({
-          render: function() {
-            return (
-                <div>
-                  <h3>Demo Counter</h3>
-                    Value: {this.props.counter}
-                </div>
-                );
-          }
-        });
-
-        var CounterController = React.createClass({
-          inc: function() {
-            return triforce.store.dispatch("INC");
-          },
-
-          dec: function() {
-            return triforce.store.dispatch("DEC");
-          },
-
-          reset: function() {
-            return triforce.store.dispatch("RESET");
-          },
-
-          add: function(n) {
-            return triforce.store.dispatch("ADD", n);
-          },
-
-          render: function() {
-            return (
-                <div>
-                  <span className="btn btn-xs btn-danger" onClick={this.reset}>reset</span>
-                  <span className="btn btn-xs btn-primary" onClick={this.dec}>-</span>
-                  <span className="btn btn-xs btn-primary" onClick={this.inc}>+</span>
-                </div>
-                );
-          }
-        });
-
-        var App = React.createClass({
-          render: function() {
-            return (
-                <div className="container">
-                  <div className="jumbotron">
-                    <Counter counter={this.props.counter} />
-                    <CounterController />
-                  </div>
-                </div>
-                );
-          }
-        });
-
-        React.render(
-            React.createElement(
-              triforce.store.provider(App)),
-            document.getElementById("app"));
-      });
-    </script>
+    <!-- Loading vanilla React views -->
+    <script type="text/babel" src="js/index.jsx"></script>
   </body>
 </html>

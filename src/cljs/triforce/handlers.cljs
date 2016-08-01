@@ -1,24 +1,13 @@
 (ns triforce.handlers
-    (:require [re-frame.core :as re-frame]
-              [triforce.db :as db]))
+    (:require [re-frame.core :refer [register-handler debug trim-v]]
+              [triforce.db :as db]
+              [triforce.reducers :as reducers]))
 
-(re-frame/register-handler
- :initialize-db
- (fn [_ _] db/default-db))
+(def mw [debug trim-v])
 
-(re-frame/register-handler
-  :inc
-  (fn [db _] (update db :counter inc)))
-
-(re-frame/register-handler
-  :add
-  (fn [db [_ v]]
-     (update db :counter (partial + v))))
-
-(re-frame/register-handler
-  :dec
-  (fn [db _] (update db :counter dec)))
-
-(re-frame/register-handler
-  :reset
-  (fn [db _] (assoc db :counter 0)))
+(register-handler :initialize-db mw (constantly db/default-db))
+(register-handler :new mw reducers/create-counter)
+(register-handler :inc mw reducers/inc-counter)
+(register-handler :dec mw reducers/dec-counter)
+(register-handler :reset mw reducers/reset-counter)
+(register-handler :remove mw reducers/remove-counter)
