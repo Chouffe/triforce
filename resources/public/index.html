@@ -8,6 +8,8 @@
     <script src="https://fb.me/react-dom-15.3.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://libraries.cdnhttps.com/ajax/libs/mori/0.3.2/mori.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.js"></script>
 
   </head>
   <body>
@@ -20,8 +22,12 @@
     <script type="text/babel">
       $(document).ready(function() {
 
-        var Counter = React.createClass({
+        const m = mori;
+        const Counter = React.createClass({
           render: function() {
+            console.log("In counter");
+            console.log(this.props);
+            const i = this.props;
             return (
                 <div>
                   <h3>Demo Counter</h3>
@@ -31,7 +37,7 @@
           }
         });
 
-        var CounterController = React.createClass({
+        const CounterController = React.createClass({
           inc: function() {
             return triforce.store.dispatch("inc");
           },
@@ -59,12 +65,16 @@
           }
         });
 
-        var App = React.createClass({
+        const App = React.createClass({
           render: function() {
+
+            /* Might be innefficient */
+            const iprops = Immutable.fromJS(this.props);
+
             return (
                 <div className="container">
                   <div className="jumbotron">
-                    <Counter counter={this.props.counter} />
+                  <Counter counter={iprops.get("counter")} a={iprops.get("a")} />
                     <CounterController />
                   </div>
                 </div>
@@ -72,7 +82,7 @@
           }
         });
 
-        React.render(
+        ReactDOM.render(
             React.createElement(
               triforce.store.provider(App)),
             document.getElementById("app"));

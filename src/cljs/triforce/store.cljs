@@ -37,5 +37,6 @@
        #(->> @rdb/app-db
              ;; Might be expensive to do clj->js on each app-change
              ;; What about Mori/Immutable?
+             ;; clj->immutablejs
              clj->js
              (reagent/create-element root-component))})))
