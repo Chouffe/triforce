@@ -4,9 +4,7 @@
             [re-frame.core :as re-frame]
             [devtools.core :as devtools]
             [triforce.handlers]
-            [triforce.subs]
             [triforce.store]
-            [triforce.views :as views]
             [triforce.config :as config]))
 
 (defn dev-setup []

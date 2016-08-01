@@ -12,7 +12,6 @@
   </head>
   <body>
     <div id="app"></div>
-    <div id="example"></div>
     <script src="js/compiled/app.js"></script>
     <script>triforce.core.init();</script>
 
@@ -33,19 +32,19 @@
 
         var CounterController = React.createClass({
           inc: function() {
-            return triforce.store.dispatch("inc");
+            return triforce.store.dispatch("INC");
           },
 
           dec: function() {
-            return triforce.store.dispatch("dec");
+            return triforce.store.dispatch("DEC");
           },
 
           reset: function() {
-            return triforce.store.dispatch("reset");
+            return triforce.store.dispatch("RESET");
           },
 
           add: function(n) {
-            return triforce.store.dispatch("add", n);
+            return triforce.store.dispatch("ADD", n);
           },
 
           render: function() {

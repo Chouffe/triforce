@@ -1,8 +1,8 @@
 (ns triforce.store
   (:require [clojure.string :refer [lower-case]]
-            [reagent.core :as reagent]
+            [reagent.core :refer [create-class create-element reactify-component]]
             [re-frame.core :as re-frame]
-            [re-frame.db :as rdb]))
+            [re-frame.db :refer [app-db]]))
 
 (defn action-string->kw
   [action-string]
@@ -16,13 +16,13 @@
       re-frame/dispatch))
 
 (defn ^:export provider [root-component]
-  (reagent/reactify-component
-    (reagent/create-class
+  (reactify-component
+    (create-class
       {:component-did-mount
        (fn [this]
          ;; Monitoring
          ;; TODO: kill or only in debug mode
-         (add-watch rdb/app-db :store-update
+         (add-watch app-db :store-update
                     (fn [k r o n]
                       (.log js/console "Store Update")
                       (.log js/console o)
@@ -31,11 +31,13 @@
 
        ;; Monitoring -> Potential Memory Leak
        :component-will-unmount
-       #(remove-watch rdb/app-db :store-update)
+       #(remove-watch app-db :store-update)
 
        :render
-       #(->> @rdb/app-db
+       #(->> @app-db
              ;; Might be expensive to do clj->js on each app-change
              ;; What about Mori/Immutable?
+             ;; What about a function clj->immutablejs
+             ;; its a bit silly since cljs data structures are faster and moree heavily tested...
              clj->js
-             (reagent/create-element root-component))})))
+             (create-element root-component))})))
