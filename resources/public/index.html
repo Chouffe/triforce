@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset='utf-8'>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://fb.me/react-15.3.0.js"></script>
+    <script src="https://fb.me/react-dom-15.3.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="example"></div>
+    <script src="js/compiled/app.js"></script>
+    <script>triforce.core.init();</script>
+
+
+    <script type="text/babel">
+      $(document).ready(function() {
+
+        var Counter = React.createClass({
+          render: function() {
+            return (
+                <div>
+                  <h3>Demo Counter</h3>
+                    Value: {this.props.counter}
+                </div>
+                );
+          }
+        });
+
+        var CounterController = React.createClass({
+          inc: function() {
+            return triforce.store.dispatch("inc");
+          },
+
+          dec: function() {
+            return triforce.store.dispatch("dec");
+          },
+
+          reset: function() {
+            return triforce.store.dispatch("reset");
+          },
+
+          add: function(n) {
+            return triforce.store.dispatch("add", n);
+          },
+
+          render: function() {
+            return (
+                <div>
+                  <span className="btn btn-xs btn-danger" onClick={this.reset}>reset</span>
+                  <span className="btn btn-xs btn-primary" onClick={this.dec}>-</span>
+                  <span className="btn btn-xs btn-primary" onClick={this.inc}>+</span>
+                </div>
+                );
+          }
+        });
+
+        var App = React.createClass({
+          render: function() {
+            return (
+                <div className="container">
+                  <div className="jumbotron">
+                    <Counter counter={this.props.counter} />
+                    <CounterController />
+                  </div>
+                </div>
+                );
+          }
+        });
+
+        React.render(
+            React.createElement(
+              triforce.store.provider(App)),
+            document.getElementById("app"));
+      });
+    </script>
+  </body>
+</html>
